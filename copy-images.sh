@@ -182,6 +182,17 @@ crane copy registry.opensuse.org/opensuse/leap@sha256:df3070b577cbdfd84dfb30d5ae
 
 cat <<EOS
 
+#############################################
+registry.opensuse.org/opensuse/tumbleweed:20240607.30.45
+#############################################
+
+EOS
+
+crane copy registry.opensuse.org/opensuse/tumbleweed@sha256:d5ca535ba690e75ccd8d88cb44e2dc783555955c6fe345ccfbf05d55cdf61ba8 ${TEST_IMAGE}:opensuse-tumbleweed
+
+
+cat <<EOS
+
 ###################
 photon:3.0-20190823
 ###################
@@ -266,3 +277,13 @@ suse-15.3: suse/sle15:15.3.17.8.16
 EOS
 
 crane copy registry.suse.com/suse/sle15@sha256:3c0b843c0d669e7851a65cea416644b7eefba03ea5b279ae8a2b82c29c61cc4b ${TEST_IMAGE}:suse-15.3_ndb
+
+cat <<EOS
+
+##################################
+sle-micro-rancher-5.4: registry.suse.com/suse/sle-micro-rancher/5.4@sha256:62848d4b4dd02a23d19e35b243ff469b07d83ea3f0c3efb352f27cee624b37e0
+##################################
+
+EOS
+
+crane copy registry.suse.com/suse/sle-micro-rancher/5.4@sha256:62848d4b4dd02a23d19e35b243ff469b07d83ea3f0c3efb352f27cee624b37e0 ${TEST_IMAGE}:sle-micro-rancher-5.4_ndb
