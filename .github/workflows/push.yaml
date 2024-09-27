@@ -65,6 +65,7 @@ jobs:
       ECR_REPO: 'public.ecr.aws/${{ github.repository_owner }}/tunnel-test-images'
     steps:
       - name: Install crane
+        uses: imjasonh/setup-crane@v0.1
         run: |
           curl -LO https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz
           tar xzvf go-containerregistry_Linux_x86_64.tar.gz crane
