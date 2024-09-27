@@ -67,6 +67,7 @@ jobs:
       - name: Install crane
         uses: imjasonh/setup-crane@v0.1
         uses: imjasonh/setup-crane@v0.1
+        uses: imjasonh/setup-crane@v0.1
         run: |
           curl -LO https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz
           echo "$(curl -sL https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz.sha256) go-containerregistry_Linux_x86_64.tar.gz" | sha256sum --check
