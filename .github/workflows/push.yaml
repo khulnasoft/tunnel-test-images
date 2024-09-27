@@ -66,8 +66,6 @@ jobs:
     steps:
       - name: Install crane
         uses: imjasonh/setup-crane@v0.1
-        uses: imjasonh/setup-crane@v0.1
-        uses: imjasonh/setup-crane@v0.1
         run: |
           curl -LO https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz
           echo "$(curl -sL https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz.sha256) go-containerregistry_Linux_x86_64.tar.gz" | sha256sum --check
@@ -75,15 +73,15 @@ jobs:
           sudo mv crane /usr/local/bin/
           sudo mv crane /usr/local/bin/
 
-- name: Copy images to ECR Public
-  env:
-    GHCR_REPO: ${{ env.TEST_IMAGE }}
-  run: |
-    # Get list of tags from GHCR
-    TAGS=$(crane ls $GHCR_REPO)
-    if [ $? -ne 0 ]; then
-      echo "Failed to retrieve tags from GHCR"
-      exit 1
-    fi
-    # Add logic here to copy images using the retrieved tags
+      - name: Copy images to ECR Public
+        env:
+          GHCR_REPO: ${{ env.TEST_IMAGE }}
+        run: |
+          # Get list of tags from GHCR
           TAGS=$(crane ls $GHCR_REPO)
+          if [ $? -ne 0 ]; then
+            echo "Failed to retrieve tags from GHCR"
+            exit 1
+          fi
+          # Add logic here to copy images using the retrieved tags
+                TAGS=$(crane ls $GHCR_REPO)
