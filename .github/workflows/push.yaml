@@ -72,10 +72,15 @@ jobs:
           sudo mv crane /usr/local/bin/
           sudo mv crane /usr/local/bin/
 
-
-      - name: Copy images to ECR Public
-        env:
-          GHCR_REPO: ${{ env.TEST_IMAGE }}
-        run: |
-          # Get list of tags from GHCR
+- name: Copy images to ECR Public
+  env:
+    GHCR_REPO: ${{ env.TEST_IMAGE }}
+  run: |
+    # Get list of tags from GHCR
+    TAGS=$(crane ls $GHCR_REPO)
+    if [ $? -ne 0 ]; then
+      echo "Failed to retrieve tags from GHCR"
+      exit 1
+    fi
+    # Add logic here to copy images using the retrieved tags
           TAGS=$(crane ls $GHCR_REPO)
