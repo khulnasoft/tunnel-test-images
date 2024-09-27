@@ -1,4 +1,4 @@
-name: Push and Copy Images
+name: Push Images
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Push images to GHCR
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -56,30 +56,3 @@ jobs:
       - name: Copy images
         if: steps.changed-files-yaml.outputs.crane-images_any_changed == 'true'
         run: make copy-images
-
-  copy_to_ecr:
-    runs-on: ubuntu-latest
-    name: Copy images from GHCR to ECR Public
-    needs: push_images
-    env:
-      ECR_REPO: 'public.ecr.aws/${{ github.repository_owner }}/tunnel-test-images'
-    steps:
-      - name: Install crane
-        run: |
-          curl -LO https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz
-          echo "$(curl -sL https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz.sha256) go-containerregistry_Linux_x86_64.tar.gz" | sha256sum --check
-          tar xzvf go-containerregistry_Linux_x86_64.tar.gz crane
-          sudo mv crane /usr/local/bin/
-
-      - name: Copy images to ECR Public
-        env:
-          GHCR_REPO: ${{ env.TEST_IMAGE }}
-        run: |
-          # Get list of tags from GHCR
-          TAGS=$(crane ls $GHCR_REPO)
-          if [ $? -ne 0 ]; then
-            echo "Failed to retrieve tags from GHCR"
-            exit 1
-          fi
-          # Add logic here to copy images using the retrieved tags
-                TAGS=$(crane ls $GHCR_REPO)
